@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elli 👑</title>
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  color:#fff;
+  background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+  background-size:400% 400%;
+  animation:gradientFlow 15s ease infinite;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  text-align:center;
+}
+@keyframes gradientFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.container{max-width:420px;width:100%}
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:8px;
+  font-size:16px;
+  border-radius:8px;
+  border:none;
+}
+button{
+  width:100%;
+  padding:12px;
+  font-size:16px;
+  border:none;
+  border-radius:8px;
+  background:linear-gradient(90deg,#ff7ac8,#ffd36a);
+  color:#fff;
+  cursor:pointer;
+}
+.progress-wrap{
+  width:100%;
+  height:10px;
+  background:#eee;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:12px;
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#ff7ac8,#ffd36a);
+  transition:width .4s ease;
+}
+.msg{margin-top:10px;font-size:14px}
+
+#finalBlock{display:none;margin-top:20px}
+.glow-name{
+  font-size:28px;
+  font-weight:bold;
+  text-shadow:0 0 10px #ff9ff3,0 0 30px #ff6ec7;
+  margin-bottom:12px;
+}
+#typedText{
+  line-height:1.6;
+  font-size:16px;
+  white-space:pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Введи 6 паролей 💖</h2>
+
+  <input id="pw1" placeholder="❤️">
+  <input id="pw2" placeholder="❤️">
+  <input id="pw3" placeholder="❤️">
+  <input id="pw4" placeholder="❤️">
+  <input id="pw5" placeholder="❤️">
+  <input id="pw6" placeholder="❤️">
+
+  <button onclick="tryUnlock()">Unlock ✨</button>
+
+  <div class="progress-wrap">
+    <div class="progress-bar" id="bar"></div>
+  </div>
+
+  <div class="msg" id="msg"></div>
+
+  <div id="finalBlock">
+    <div class="glow-name">Elli 👑</div>
+    <div id="typedText"></div>
+  </div>
+</div>
+
+<script>
+const PASSWORDS = [
+  "05.02.2009",
+  "#156466",
+  "05.01.2026",
+  "Катюня",
+  "Жизнь в кайф",
+  "Elli"
+];
+
+const FINAL_TEXT = `💋Happy birthday💋
+
+С днём рождения, принцесса! 👑✨
+Пусть каждый твой день будет наполнен светом, радостью и улыбками, а сердце теплом и верой в себя. Желаю тебе море счастья, океан любви и бесконечные горы вдохновения. Пусть сбываются даже самые смелые мечты, а мир отвечает тебе добротой на твою доброту.
+
+Помни: у тебя всё обязательно получится. Даже если иногда будет трудно, даже если что-то не сразу сложится, ты сильная, умная и невероятно особенная. Рядом с тобой всегда есть люди, которые поддержат, помогут и поверят в тебя, даже когда ты сама сомневаешься.
+
+Никогда не сдавайся и не переставай мечтать 🌟
+Иди вперёд с открытым сердцем, будь собой, сияй и знай — ты достойна самого лучшего в этом мире. Пусть удача будет твоей верной подругой, а счастье — постоянным гостем в твоей жизни.
+
+❤️
+`;
+
+const inputs = [
+  document.getElementById("pw1"),
+  document.getElementById("pw2"),
+  document.getElementById("pw3"),
+  document.getElementById("pw4"),
+  document.getElementById("pw5"),
+  document.getElementById("pw6")
+];
+
+const bar = document.getElementById("bar");
+const msg = document.getElementById("msg");
+const finalBlock = document.getElementById("finalBlock");
+const typed = document.getElementById("typedText");
+
+function tryUnlock(){
+  let correct = 0;
+  inputs.forEach((input, i)=>{
+    if(input.value.trim() === PASSWORDS[i]) correct++;
+  });
+
+  bar.style.width = (correct/6*100) + "%";
+  msg.textContent = correct + "/6 unlocked";
+
+  if(correct === 6){
+    finalBlock.style.display = "block";
+    typeText(FINAL_TEXT);
+  }
+}
+
+function typeText(text){
+  typed.textContent = "";
+  let i = 0;
+  const timer = setInterval(()=>{
+    typed.textContent += text.charAt(i);
+    i++;
+    if(i >= text.length) clearInterval(timer);
+  },35);
+}
+</script>
+
+</body>
+</html>
